@@ -6,6 +6,21 @@ We are using HTTParty to connect to the shop's API and then we can use some logi
 I know this seems really simple, it is, but I had a hard time finding a simple way to make changes through the API without installing
 an app on the store and this is just enough to do it. This is also setup for beginners like myself!
 
+To start, you will have to install these 3 gems on your system and have ruby installed. Enter the commands below into terminal. Skip this if you already have these installed!
+
+First install Homebrew:
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+Then install Ruby using Homebrew:
+brew install ruby
+
+Run these commands:
+gem install shopify_api
+gem install HTTParty
+gem install Dotenv
+
+Your ready to run this code! Download it to your computer then follow the next part
+
 =end
 
 puts "Starting program. Initializing libraries..."
@@ -62,12 +77,14 @@ puts "Setting Up HTTParty Basic Auth..."
 puts "running app test now..."
 
 # Here is a basic test you can do to see if it's working! This will return the shop.json
-#@test = HTTParty.get("https://" + API_SHOP + "/admin/shop.json", :basic_auth => auth)
-#puts @test
+def testing123
+  @test = HTTParty.get("https://" + API_SHOP + "/admin/shop.json", :basic_auth => @auth)
+  puts @test
+end
 
 # Create access method for code reuse - work in progress!
 #def getData(command)
-#  gettingData = HTTParty.get("https://" + API_SHOP + command), :basic_auth => auth)
+#  gettingData = HTTParty.get("https://" + API_SHOP + command), :basic_auth => @auth)
 #  return gettingData
 #end
 
@@ -78,15 +95,15 @@ puts "running app test now..."
 #end
 
 # Working
-def deleteImportedCustomers
+#def deleteImportedCustomers
 
-  @CustomerIds.each { |custId|
-    response = HTTParty.delete("https://" + API_SHOP + "/admin/customers/" + custId + ".json", :basic_auth => @auth)
-    puts "Deleting first customer ID:" + custId + response.to_s
-    # Lets not flood API calls so sleep for a small time. Confirmed with Splunk this is fine and should not be throttled.
-    sleep(0.25)
-  }
-end
+#  @CustomerIds.each { |custId|
+#    response = HTTParty.delete("https://" + API_SHOP + "/admin/customers/" + custId + ".json", :basic_auth => @auth)
+#    puts "Deleting first customer ID:" + custId + response.to_s
+#    # Lets not flood API calls so sleep for a small time. Confirmed with Splunk this is fine and should not be throttled.
+#    sleep(0.25)
+#  }
+#end
 
 # When the program runs, this code calls your function/method and starts the operations.
-deleteImportedCustomers
+testing123
