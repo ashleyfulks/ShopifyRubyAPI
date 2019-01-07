@@ -8,10 +8,13 @@ We are using HTTParty to connect to the shop's API and then we can use some logi
 I know this seems really simple, it is, but I had a hard time finding a simple way to make changes through the API without installing
 an app on the store and this is just enough to do it. This is also setup for beginners like myself!
 
+
 Files you need are:
 
 basicApp.rb - a simple Ruby app to call API commands
+
 .env - a place to store your store and private app variables seperate from the main file
+
 
 Feel free to fork and make changes to the code to whatever your needs are!
 
