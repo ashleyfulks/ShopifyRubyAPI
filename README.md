@@ -21,5 +21,7 @@ Feel free to fork and make changes to the code to whatever your needs are!
 Cheers,
 
 Ash Fulks
+
 Plus Technical Merchant Support
+
 Shopify
