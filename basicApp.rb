@@ -53,6 +53,11 @@ Done!
 
 Now you are ready to connect to your shop and issue some commands!
 
+PS. When you want to run your program, use terminal, navigate to the directory where you 
+stored this file and created the .env file then type this command and press enter:
+
+ruby basicApp.rb
+
 =end
 
 # Next you want to declare your Variables
