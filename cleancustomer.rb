@@ -95,20 +95,6 @@ puts "Setting Up HTTParty Basic Auth..."
 
 #Run app
 puts "running app test now..."
-#@test = HTTParty.get("https://" + API_SHOP + "/admin/shop.json", :basic_auth => auth)
-#puts @test
-
-# Create access method for code reuse
-#def getData(command)
-#  gettingData = HTTParty.get("https://" + API_SHOP + command), :basic_auth => auth)
-#  return gettingData
-#end
-
-# Access customers, download complete list of customers and store in an array
-#def getCustomers
-#  @getCustomers = HTTParty.get("https://" + API_SHOP + "/admin/customers.json", :basic_auth => @auth)
-#puts @getCustomers
-#end
 
 def deleteImportedCustomers
 
