@@ -66,7 +66,7 @@ API_KEY = ENV['API_KEY']
 API_SECRET = ENV['API_SECRET']
 API_SHOP = ENV['API_SHOP']
 
-@CustomerIds = [
+@deleteIds = [
   "803461955695",
   "805660524655",
   "845475872879",
@@ -77,6 +77,7 @@ API_SHOP = ENV['API_SHOP']
 # https://stackoverflow.com/questions/7627419/how-to-use-basic-authentication-with-httparty-in-a-rails-app
 puts "Setting Up HTTParty Basic Auth..."
 @auth = {:username => API_KEY, :password => API_SECRET}
+@loopNumber = 0
 
 #Run app
 puts "running app test now..."
@@ -87,28 +88,30 @@ def testing123
   puts @test
 end
 
-# Create access method for code reuse - work in progress!
-#def getData(command)
-#  gettingData = HTTParty.get("https://" + API_SHOP + command), :basic_auth => @auth)
-#  return gettingData
-#end
+# Uncomment out this function to delete customers
+#def deleteCustomers
 
-# Access customers, download complete list of customers and push to screen
-#def getCustomers
-#  @getCustomers = HTTParty.get("https://" + API_SHOP + "/admin/customers.json", :basic_auth => @auth)
-#puts @getCustomers
-#end
-
-# Working
-#def deleteImportedCustomers
-
-#  @CustomerIds.each { |custId|
-#    response = HTTParty.delete("https://" + API_SHOP + "/admin/customers/" + custId + ".json", :basic_auth => @auth)
-#    puts "Deleting first customer ID:" + custId + response.to_s
+#  @deleteIds.each { |deleteId|
+#    response = HTTParty.delete("https://" + API_SHOP + "/admin/customers/" + deleteId + ".json", :basic_auth => @auth)
+#    @loopNumber = @loopNumber + 1
+#    puts "Deleting " + @deleteId.to_s + " Product ID:" + deleteId + response.to_s
 #    # Lets not flood API calls so sleep for a small time. Confirmed with Splunk this is fine and should not be throttled.
-#    sleep(0.25)
+#    sleep(0.20)
 #  }
 #end
 
-# When the program runs, this code calls your function/method and starts the operations.
+# Uncomment out this function to delete products
+#def deleteProducts
+
+#  @deleteIds.each { |deleteId|
+#    response = HTTParty.delete("https://" + API_SHOP + "/admin/products/" + deleteId + ".json", :basic_auth => @auth)
+#    @loopNumber = @loopNumber + 1
+#    puts "Deleting " + @deleteId.to_s + " Product ID:" + deleteId + response.to_s
+#    # Lets not flood API calls so sleep for a small time. Confirmed with Splunk this is fine and should not be throttled.
+#    sleep(0.20)
+#  }
+#end
+
+# When the program runs, this code calls your function/method and starts the operation. 
+# Change it to whatever function you want to start
 testing123
