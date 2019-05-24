@@ -1,10 +1,9 @@
 =begin
 
-Hi there. This file is a demo of how to connect Ruby to Shopify's API using basic authentication.
+Hi there. This file is used to delete products or customers in bulk.
+This app runs on your local computer and connects to Shopify's API using basic authentication.
 This is especially helpful in automating difficult tasks, such as mass deleting customers.
-We are using HTTParty to connect to the shop's API and then we can use some logic to create loops and have fancy stuff like arrays of data.
-I know this seems really simple, it is, but I had a hard time finding a simple way to make changes through the API without installing
-an app on the store and this is just enough to do it. This is also setup for beginners like myself!
+We are using HTTParty to connect to the shop's API.
 
 To start, you will have to install these 3 gems on your system and have ruby installed. Enter the commands below into terminal. Skip this if you already have these installed!
 
@@ -15,63 +14,54 @@ Then install Ruby using Homebrew:
 brew install ruby
 
 Run these commands:
-gem install shopify_api
-gem install HTTParty
-gem install Dotenv
-
-Your ready to run this code! Download it to your computer then follow the next part
-
-=end
-
-puts "Starting program. Initializing libraries..."
-require 'shopify_api'
-require 'httparty'
-require 'dotenv'
-Dotenv.load
-
-=begin
+sudo gem install shopify_api
+sudo gem install httparty
+sudo gem install dotenv
 
 To access the shop backend, you need to create an app that is allowed to access the store your working on.
 You will be creating API keys and storing them in a secret file that will not upload to Github, called a ".env" file.
 This is what the require 'dotenv' library does above, lets you access that data in another file.
 
-In your text editor, create a new file called ".env" and save it in the same directory as this file.
-It is a text file, please copy in this text:
+Open the ".env" file and follow the instuctions there. After that, come back here and continue.
 
-API_KEY=ReplaceWithAPIKey
-API_SECRET=ReplaceWithAPISecret
-API_SHOP="ReplaceWithYourShop.myshopify.com"
+You will need to compile a list of products or customers to delete and add them to this file in the array called @deleteIds.
+Get this data from a CSV or SQL and use something like https://delim.co/ to convert it to an array. 
+Don't forget to wrap them in quotes! (ie "4326764454","654234565")
 
-You will want to open the shop you want to work on in the browser. Then go to admin -> Apps -> Manage private apps -> Create a new private app
-Give it a name, put in your email, set the write permissions (if needed) and Save
-Press the "I understand, create the app" button
-Copy the API key and paste it into your .env file right after API_KEY=
-Copy the Password and paste it right after API_SECRET=
-Change the API_SHOP= to your shop name
-Save the file.
-Done!
+Next scroll to the bottom of this app and uncomment the function you wish to run, deleteCustomers or deleteProducts. 
 
-Now you are ready to connect to your shop and issue some commands!
+Running the app
 
-PS. When you want to run your program, use terminal, navigate to the directory where you 
-stored this file and created the .env file then type this command and press enter:
+When you want to run your program, use terminal, navigate to the directory where you 
+stored this file and then type this command and press enter:
 
 ruby basicApp.rb
 
+This will attempt to run the app, if everything is set correctly the delete process will start. Allow it to run until 
+it is done!
+
 =end
 
-# Next you want to declare your Variables
-puts "Declaring Variables..."
-API_KEY = ENV['API_KEY']
-API_SECRET = ENV['API_SECRET']
-API_SHOP = ENV['API_SHOP']
-
+# Delete this dummy data and replace it with your ids to delete
 @deleteIds = [
   "803461955695",
   "805660524655",
   "845475872879",
   "1022933041263"
 ]
+
+# Initialize the libraries...
+puts "Starting program. Initializing libraries..."
+require 'shopify_api'
+require 'httparty'
+require 'dotenv'
+Dotenv.load
+
+# Next you want to declare your private app variables
+puts "Declaring Variables..."
+API_KEY = ENV['API_KEY']
+API_SECRET = ENV['API_SECRET']
+API_SHOP = ENV['API_SHOP']
 
 #Setup Basic Authentication for httparty
 # https://stackoverflow.com/questions/7627419/how-to-use-basic-authentication-with-httparty-in-a-rails-app
@@ -82,36 +72,32 @@ puts "Setting Up HTTParty Basic Auth..."
 #Run app
 puts "running app test now..."
 
-# Here is a basic test you can do to see if it's working! This will return the shop.json
-def testing123
-  @test = HTTParty.get("https://" + API_SHOP + "/admin/shop.json", :basic_auth => @auth)
-  puts @test
+# this function deletes customers
+def deleteCustomers
+
+  @deleteIds.each { |deleteId|
+    response = HTTParty.delete("https://" + API_SHOP + "/admin/customers/" + deleteId + ".json", :basic_auth => @auth)
+    @loopNumber = @loopNumber + 1
+    puts "Deleting " + @deleteId.to_s + " Product ID:" + deleteId + response.to_s
+    # Lets not flood API calls so sleep for a small time. Confirmed with Splunk this is fine and should not be throttled.
+    sleep(0.20)
+  }
 end
 
-# Uncomment out this function to delete customers
-#def deleteCustomers
+# this function deletes products
+def deleteProducts
 
-#  @deleteIds.each { |deleteId|
-#    response = HTTParty.delete("https://" + API_SHOP + "/admin/customers/" + deleteId + ".json", :basic_auth => @auth)
-#    @loopNumber = @loopNumber + 1
-#    puts "Deleting " + @deleteId.to_s + " Product ID:" + deleteId + response.to_s
-#    # Lets not flood API calls so sleep for a small time. Confirmed with Splunk this is fine and should not be throttled.
-#    sleep(0.20)
-#  }
-#end
-
-# Uncomment out this function to delete products
-#def deleteProducts
-
-#  @deleteIds.each { |deleteId|
-#    response = HTTParty.delete("https://" + API_SHOP + "/admin/products/" + deleteId + ".json", :basic_auth => @auth)
-#    @loopNumber = @loopNumber + 1
-#    puts "Deleting " + @deleteId.to_s + " Product ID:" + deleteId + response.to_s
-#    # Lets not flood API calls so sleep for a small time. Confirmed with Splunk this is fine and should not be throttled.
-#    sleep(0.20)
-#  }
-#end
+  @deleteIds.each { |deleteId|
+    response = HTTParty.delete("https://" + API_SHOP + "/admin/products/" + deleteId + ".json", :basic_auth => @auth)
+    @loopNumber = @loopNumber + 1
+    puts "Deleting " + @deleteId.to_s + " Product ID:" + deleteId + response.to_s
+    # Lets not flood API calls so sleep for a small time. Confirmed with Splunk this is fine and should not be throttled.
+    sleep(0.20)
+  }
+end
 
 # When the program runs, this code calls your function/method and starts the operation. 
-# Change it to whatever function you want to start
-testing123
+# Uncomment the function you want to run
+
+#deleteCustomers
+#deleteProducts
