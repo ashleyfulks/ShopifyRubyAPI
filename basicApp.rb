@@ -14,7 +14,6 @@ Then install Ruby using Homebrew:
 brew install ruby
 
 Run these commands:
-sudo gem install shopify_api
 sudo gem install httparty
 sudo gem install dotenv
 
@@ -52,7 +51,6 @@ it is done!
 
 # Initialize the libraries...
 puts "Starting program. Initializing libraries..."
-require 'shopify_api'
 require 'httparty'
 require 'dotenv'
 Dotenv.load
