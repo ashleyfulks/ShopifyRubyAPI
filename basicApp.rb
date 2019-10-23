@@ -76,7 +76,7 @@ def deleteCustomers
   @deleteIds.each { |deleteId|
     response = HTTParty.delete("https://" + API_SHOP + "/admin/customers/" + deleteId + ".json", :basic_auth => @auth)
     @loopNumber = @loopNumber + 1
-    puts "Deleting " + @deleteId.to_s + " Product ID:" + deleteId + response.to_s
+    puts "Deleting " + @deleteId.to_s + " Customer ID:" + deleteId + response.to_s
     # Lets not flood API calls so sleep for a small time. Confirmed with Splunk this is fine and should not be throttled.
     sleep(0.20)
   }
