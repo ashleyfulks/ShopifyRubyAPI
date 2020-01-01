@@ -58,7 +58,7 @@ Dotenv.load
 # Next you want to declare your private app variables
 puts "Declaring Variables..."
 API_KEY = ENV['API_KEY']
-API_SECRET = ENV['API_SECRET']
+API_SECRET = ENV['API_PASSWORD']
 API_SHOP = ENV['API_SHOP']
 
 #Setup Basic Authentication for httparty
