@@ -16,12 +16,15 @@ We are using HTTParty to connect to the shop's API.
 To start, you will have to install these 3 gems on your system and have ruby installed. Enter the commands below into terminal. Skip this if you already have these installed!
 
 First install Homebrew:
+
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 Then install Ruby using Homebrew:
+
   brew install ruby
 
 Run these commands:
+
   sudo gem install httparty
   
   sudo gem install dotenv
@@ -40,6 +43,7 @@ Running the app
 
 When you want to run your program, use terminal, navigate to the directory where you 
 stored this file and then type this command and press enter:
+
   ruby basicApp.rb
 
 This will attempt to run the app, if everything is set correctly the delete process will start. Allow it to run until 
