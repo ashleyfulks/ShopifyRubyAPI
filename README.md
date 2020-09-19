@@ -23,6 +23,7 @@ Then install Ruby using Homebrew:
 
 Run these commands:
   sudo gem install httparty
+  
   sudo gem install dotenv
 
 To access the shop backend, you need to create an app that is allowed to access the store your working on.
